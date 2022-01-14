@@ -65,4 +65,6 @@ object MockData {
             publishedAt = "2021-11-04T01:55:00Z"
         )
     )
+
+    fun getNews(id: Int?) = topNewsList.first { it.id == id }
 }

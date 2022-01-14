@@ -1,6 +1,7 @@
 package com.jokopriyono.newscompose.ui.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,18 +28,23 @@ fun TopNews(navController: NavController) {
         Text(text = "Top News", fontWeight = FontWeight.SemiBold)
         LazyColumn {
             items(MockData.topNewsList) {
-                TopNewsItem(newsData = it)
+                TopNewsItem(newsData = it) {
+                    navController.navigate("Detail/${it.id}")
+                }
             }
         }
     }
 }
 
 @Composable
-fun TopNewsItem(newsData: NewsData) {
+fun TopNewsItem(newsData: NewsData, onNewsClick: () -> Unit) {
     Box(
         modifier = Modifier
             .height(200.dp)
             .padding(8.dp)
+            .clickable {
+                onNewsClick()
+            }
     ) {
         Image(
             painter = painterResource(id = newsData.image),
@@ -61,5 +67,5 @@ fun TopNewsItem(newsData: NewsData) {
 @Preview(showBackground = true)
 @Composable
 fun TopNewsPreview() {
-    TopNewsItem(newsData = MockData.topNewsList[0])
+    TopNewsItem(newsData = MockData.topNewsList[0], onNewsClick = {})
 }
