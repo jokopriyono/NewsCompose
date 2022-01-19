@@ -1,11 +1,10 @@
 package com.jokopriyono.newscompose.network
 
 import android.util.Log
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import com.jokopriyono.newscompose.models.ArticleCategory
 import com.jokopriyono.newscompose.models.TopNewsResponse
+import com.jokopriyono.newscompose.models.getArticleCategory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,6 +15,7 @@ class NewsManager {
         @Composable get() = remember {
             _newsResponse
         }
+    val selectedCategory: MutableState<ArticleCategory?> = mutableStateOf(null)
 
     init {
         getArticles()
@@ -42,5 +42,10 @@ class NewsManager {
 
         })
 
+    }
+
+    fun onSelectedCategoryChanged(category: String) {
+        val newCategory = getArticleCategory(category = category)
+        selectedCategory.value = newCategory
     }
 }
